@@ -6,6 +6,7 @@
     "scripts": {
         "start": "nodemon ./app.js --exec babel-node --presets babel-preset-env",
         "test": "jest --runInBand ./test",
+        "create-coverage": "jest --runInBand --coverage ./test",
         "lint": "eslint --fix src"
     },
     "author": "Tatu Pesonen, Jooa Sankari",
