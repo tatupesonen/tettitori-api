@@ -1,21 +1,28 @@
-import tettipaikkaModel from '../models/Tettipaikka'
+import Tettipaikka from '../models/Tettipaikka'
 
 module.exports.getSinglePaikka = async query => {
     //Build regexp search
     const searchKey = new RegExp(query, 'i')
 
-    const result = await tettipaikkaModel.findOne({ title: searchKey })
-    console.log(result)
+    const result = await Tettipaikka.findOne({ title: searchKey })
     return result
 }
 
 module.exports.getAllPaikka = async () => {
-    const result = await tettipaikkaModel.find({})
+    const result = await Tettipaikka.find({})
     return result
 }
 
 module.exports.create = async notice => {
     if (!notice) throw new Error('Missing notice information')
 
-    await tettipaikkaModel.create(notice)
+    const tettipaikka = new Tettipaikka({
+        ...notice,
+    })
+
+    await tettipaikka.save()
+}
+
+module.exports.delete = async id => {
+    return Tettipaikka.deleteOne({ _id: id })
 }
