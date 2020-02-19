@@ -16,9 +16,7 @@ module.exports.getAllPaikka = async () => {
 module.exports.create = async notice => {
     if (!notice) throw new Error('Missing notice information')
 
-    const tettipaikka = new Tettipaikka({
-        ...notice,
-    })
+    const tettipaikka = new Tettipaikka(notice)
 
     await tettipaikka.save()
 }
