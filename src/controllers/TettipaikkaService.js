@@ -8,6 +8,14 @@ module.exports.getSinglePaikka = async query => {
     return result
 }
 
+module.exports.searchPaikkaByTitle = async query => {
+    //Build regexp search
+    const searchKey = new RegExp(query, 'i')
+
+    const result = await Tettipaikka.find({ title: searchKey })
+    return result
+}
+
 module.exports.getAllPaikka = async () => {
     const result = await Tettipaikka.find({})
     return result
