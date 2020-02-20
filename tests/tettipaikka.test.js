@@ -24,6 +24,12 @@ const tettipaikkaComplete2 = {
     yhteydenottotapa: 'Sähköpostitse',
 }
 
+const tettipaikkaComplete3 = {
+    title: 'Tiiriön osuuspankki',
+    tehtavat: 'Imurointia',
+    yhteydenottotapa: 'Sähköpostitse',
+}
+
 //We will need this in our tests
 let singleId = ''
 
@@ -41,6 +47,12 @@ describe('tettipaikka ', () => {
         ).not.toThrow()
     })
 
+    it('third one can be created correctly', async () => {
+        expect(
+            async () => await tettipaikkaService.create(tettipaikkaComplete3)
+        ).not.toThrow()
+    })
+
     it('wait for db sync', async () => {
         await new Promise(r => setTimeout(r, 100))
     })
@@ -54,6 +66,11 @@ describe('tettipaikka ', () => {
         const result = await tettipaikkaService.getSinglePaikka('Tiir')
         singleId = result._id
         expect(typeof result._id).not.toBeNull()
+    })
+
+    it('database returns two objects with title search', async () => {
+        const result = await tettipaikkaService.searchPaikkaByTitle('Tiir')
+        expect(result.length).toBe(2)
     })
 
     it('database returns all objects', async () => {
