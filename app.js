@@ -49,6 +49,17 @@ app.get('/search', async (req, res) => {
 })
 
 //POST handlers
+app.post('/add', async (req, res) => {
+    const newpaikka = req.body
+
+    if (await Tettipaikka.create(newpaikka)) {
+        res.status(201)
+        res.send('OK')
+    } else {
+        res.status(400)
+        res.send()
+    }
+})
 
 //listen
 app.listen(process.env.PORT || 3000, () => {
