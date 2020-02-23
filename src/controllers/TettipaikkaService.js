@@ -12,13 +12,21 @@ module.exports.searchPaikkaByTitle = async query => {
     //Build regexp search
     const searchKey = new RegExp(query, 'i')
 
-    const result = await Tettipaikka.find({ title: searchKey })
-    return result
+    try {
+        const result = await Tettipaikka.find({ title: searchKey })
+        return result
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 module.exports.getAllPaikka = async () => {
-    const result = await Tettipaikka.find({})
-    return result
+    try {
+        const result = await Tettipaikka.find({})
+        return result
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 module.exports.create = async notice => {
@@ -26,9 +34,19 @@ module.exports.create = async notice => {
 
     const tettipaikka = new Tettipaikka(notice)
 
-    await tettipaikka.save()
+    try {
+        await tettipaikka.save()
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+    return true
 }
 
 module.exports.delete = async id => {
-    return Tettipaikka.deleteOne({ _id: id })
+    try {
+        return Tettipaikka.deleteOne({ _id: id })
+    } catch (err) {
+        console.log(err)
+    }
 }
