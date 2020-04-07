@@ -1,5 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 import Tettipaikka from './src/controllers/TettipaikkaService'
 
 const app = express()
@@ -9,6 +10,7 @@ const mongoose = require('mongoose')
 const dbHandler = require('./tests/db-handler')
 dbHandler.connect()
 
+app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -16,15 +18,21 @@ app.use(bodyParser.urlencoded({ extended: true }))
 const MIN_SEARCH_LENGTH = 3
 
 const tettipaikkaComplete = {
-    title: 'jee',
+    title: 'ABC Tiiriö',
     tehtavat: 'Siivousta',
     yhteydenottotapa: 'Tekstiviestitse',
 }
+const tettipaikkaComplete2 = {
+    title: 'Myyntijehut Oy',
+    tehtavat: 'Myyntitehtäviä',
+    yhteydenottotapa: 'Puhelimitse',
+}
 
 Tettipaikka.create(tettipaikkaComplete)
+Tettipaikka.create(tettipaikkaComplete2)
 
 //GET handlers
-app.get('/', async (req, res) => {
+app.get('/paikat', async (req, res) => {
     const paikat = await Tettipaikka.getAllPaikka()
 
     //Keep for debug
@@ -62,6 +70,6 @@ app.post('/add', async (req, res) => {
 })
 
 //listen
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 3001, () => {
     console.log('App listening.')
 })
