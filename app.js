@@ -27,9 +27,22 @@ const tettipaikkaComplete2 = {
     tehtavat: 'Myyntitehtäviä',
     yhteydenottotapa: 'Puhelimitse',
 }
+const tettipaikkaComplete3 = {
+    title: 'Muumin mustikkamehu',
+    tehtavat: 'Mustikkamehun tuotantoa',
+    yhteydenottotapa: 'Laita vaikka postia',
+}
+const tettipaikkaComplete4 = {
+    title: 'Teimon kauppa',
+    tehtavat: 'Myyntitehtäviä',
+    yhteydenottotapa: 'Puhelimitse',
+}
 
 Tettipaikka.create(tettipaikkaComplete)
 Tettipaikka.create(tettipaikkaComplete2)
+Tettipaikka.create(tettipaikkaComplete3)
+Tettipaikka.create(tettipaikkaComplete4)
+
 
 //GET handlers
 app.get('/paikat', async (req, res) => {
