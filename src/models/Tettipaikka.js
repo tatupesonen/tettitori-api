@@ -9,6 +9,7 @@ const tettipaikkaSchema = new mongoose.Schema({
     additionalInfo: String,
     contactPerson: String,
     URL: String,
+    imgURL: String,
 })
 
 module.exports = mongoose.model('Tettipaikka', tettipaikkaSchema)
