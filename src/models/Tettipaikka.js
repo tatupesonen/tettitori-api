@@ -12,7 +12,8 @@ const tettipaikkaSchema = new mongoose.Schema({
     imgURL: String,
     ala: [{
       type: String
-    }]
+    }],
+    password: { type: String, required: true, select: false }
 })
 
 module.exports = mongoose.model('Tettipaikka', tettipaikkaSchema)

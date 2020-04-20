@@ -1,4 +1,5 @@
 import Tettipaikka from '../models/Tettipaikka'
+import { generatePassword } from '../util/passwordgen'
 
 module.exports.getSinglePaikka = async query => {
     //Build regexp search
@@ -32,7 +33,8 @@ module.exports.getAllPaikka = async () => {
 module.exports.create = async notice => {
     if (!notice) throw new Error('Missing notice information')
     try {
-        const tettipaikka = Tettipaikka.create(notice)
+        notice.password = generatePassword()
+        const tettipaikka = Tettipaikka.create(notice);
         return tettipaikka
     } catch (err) {
         console.log(err)

@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import Tettipaikka from './src/controllers/TettipaikkaService'
+import { generatePassword } from './src/util/passwordgen'
 
 const app = express()
 
@@ -17,25 +18,30 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //DEFAULTS
 const MIN_SEARCH_LENGTH = 3
 
+
 const tettipaikkaComplete = {
     title: 'ABC Tiiriö',
     tehtavat: 'Siivousta',
     yhteydenottotapa: 'Tekstiviestitse',
+    password: generatePassword()
 }
 const tettipaikkaComplete2 = {
     title: 'Myyntijehut Oy',
     tehtavat: 'Myyntitehtäviä',
     yhteydenottotapa: 'Puhelimitse',
+    password: generatePassword()
 }
 const tettipaikkaComplete3 = {
     title: 'Muumin mustikkamehu',
     tehtavat: 'Mustikkamehun tuotantoa',
     yhteydenottotapa: 'Laita vaikka postia',
+    password: generatePassword()
 }
 const tettipaikkaComplete4 = {
     title: 'Teimon kauppa',
     tehtavat: 'Myyntitehtäviä',
     yhteydenottotapa: 'Puhelimitse',
+    password: generatePassword()
 }
 
 Tettipaikka.create(tettipaikkaComplete)
