@@ -31,16 +31,14 @@ module.exports.getAllPaikka = async () => {
 
 module.exports.create = async notice => {
     if (!notice) throw new Error('Missing notice information')
-
-    const tettipaikka = new Tettipaikka(notice)
-
     try {
-        await tettipaikka.save()
+        const tettipaikka = Tettipaikka.create(notice)
+        return tettipaikka
     } catch (err) {
         console.log(err)
         return false
     }
-    return true
+    
 }
 
 module.exports.delete = async id => {

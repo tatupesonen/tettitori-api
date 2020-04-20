@@ -72,10 +72,12 @@ app.get('/search', async (req, res) => {
 //POST handlers
 app.post('/add', async (req, res) => {
     const newpaikka = req.body
+    const paikka = await Tettipaikka.create(newpaikka)
+    console.log(paikka)
 
-    if (await Tettipaikka.create(newpaikka)) {
+    if (paikka) {
         res.status(201)
-        res.send('OK')
+        res.send(paikka)
     } else {
         res.status(400)
         res.send()
