@@ -21,6 +21,17 @@ module.exports.searchPaikkaByTitle = async query => {
     }
 }
 
+module.exports.searchPaikkaByPassword = async query => {
+
+    try {
+        const result = await Tettipaikka.findOne({ password: query })
+        console.log(result)
+        return result
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 module.exports.getAllPaikka = async () => {
     try {
         const result = await Tettipaikka.find({})

@@ -75,6 +75,8 @@ app.get('/search', async (req, res) => {
     res.send(JSON.stringify(paikat))
 })
 
+
+
 //POST handlers
 app.post('/add', async (req, res) => {
     const newpaikka = req.body
@@ -88,6 +90,22 @@ app.post('/add', async (req, res) => {
         res.status(400)
         res.send()
     }
+})
+
+app.post('/findbypassword', async (req, res) => {
+    console.log("pass search", req.body)
+
+    const paikka = await Tettipaikka.searchPaikkaByPassword(req.body.password)
+
+    //Keep for debug
+    if(paikka) {
+        res.status(200)
+        res.send(paikka);
+    } else {
+        res.status(404)
+        res.send()
+    }
+    
 })
 
 //listen
