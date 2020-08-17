@@ -10,10 +10,8 @@ const tettipaikkaSchema = new mongoose.Schema({
     contactPerson: String,
     URL: String,
     imgURL: String,
-    ala: [{
-      type: String
-    }],
-    password: { type: String, required: true, select: false }
+    ala: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ala' }],
+    password: { type: String, required: true, select: false },
 })
 
 module.exports = mongoose.model('Tettipaikka', tettipaikkaSchema)

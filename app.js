@@ -2,7 +2,9 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import Tettipaikka from './src/controllers/TettipaikkaService'
+import Ala from './src/controllers/AlaService'
 import { generatePassword } from './src/util/passwordgen'
+import AlaLoader from './src/util/alaScraper';
 
 const app = express()
 
@@ -14,6 +16,7 @@ dbHandler.connect()
 app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+AlaLoader.load();
 
 //DEFAULTS
 const MIN_SEARCH_LENGTH = 3
@@ -23,25 +26,21 @@ const tettipaikkaComplete = {
     title: 'ABC Tiiriö',
     tehtavat: 'Siivousta',
     yhteydenottotapa: 'Tekstiviestitse',
-    password: generatePassword()
 }
 const tettipaikkaComplete2 = {
     title: 'Myyntijehut Oy',
     tehtavat: 'Myyntitehtäviä',
     yhteydenottotapa: 'Puhelimitse',
-    password: generatePassword()
 }
 const tettipaikkaComplete3 = {
     title: 'Muumin mustikkamehu',
     tehtavat: 'Mustikkamehun tuotantoa',
     yhteydenottotapa: 'Laita vaikka postia',
-    password: generatePassword()
 }
 const tettipaikkaComplete4 = {
     title: 'Teimon kauppa',
     tehtavat: 'Myyntitehtäviä',
     yhteydenottotapa: 'Puhelimitse',
-    password: generatePassword()
 }
 
 Tettipaikka.create(tettipaikkaComplete)
@@ -58,6 +57,15 @@ app.get('/paikat', async (req, res) => {
     console.log(`Received request from IP: ${req.ip}`)
     res.status(200)
     res.send(JSON.stringify(paikat))
+})
+
+app.get('/alat', async (req, res) => {
+    const alat = await Ala.getAllAla()
+
+    //Keep for debug
+    console.log(`Received request from IP: ${req.ip}`)
+    res.status(200)
+    res.send(JSON.stringify(alat))
 })
 
 app.get('/search', async (req, res) => {

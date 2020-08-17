@@ -34,7 +34,10 @@ module.exports.searchPaikkaByPassword = async query => {
 
 module.exports.getAllPaikka = async () => {
     try {
-        const result = await Tettipaikka.find({})
+        const result = await Tettipaikka.find({}).populate({
+            path: "ala",
+            model: 'Ala'
+        });
         return result
     } catch (err) {
         console.log(err)
@@ -42,8 +45,9 @@ module.exports.getAllPaikka = async () => {
 }
 
 module.exports.create = async notice => {
-    if (!notice) throw new Error('Missing notice information')
+    if (!notice) throw new Error('Missing notice information');
     try {
+        console.log(notice);
         notice.password = generatePassword()
         const tettipaikka = Tettipaikka.create(notice);
         return tettipaikka
