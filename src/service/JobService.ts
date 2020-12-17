@@ -3,6 +3,8 @@ import Mongoose from 'mongoose';
 import Logger from '../util/logger';
 import Job from '../schema/Job';
 import * as validator from 'express-validator';
+import { ReadStream } from 'fs';
+import User from '../schema/User';
 
 //Import objectID Checker from mongoose
 const isValid = Mongoose.Types.ObjectId.isValid;
@@ -50,8 +52,12 @@ const showJobs = async (req: Request, res: Response) => {
     }
 }
 
-const createJob = async (req: Request, res: Response) => {
+const createJob = async (req: any, res: Response) => {
     let jobdata = req.body;
+    let user = await User.findOne({ username: req.user?.username });
+    jobdata.author = user?._id;
+    console.log(req.body);
+
     if (!isValidJobBody) {
         Logger.warn(`${req.connection.remoteAddress} tried to create a malformed job!`);
         return res.status(400).json({
@@ -63,21 +69,29 @@ const createJob = async (req: Request, res: Response) => {
     let item = await job.save();
     if (!item) {
         Logger.error(`Could not save a new job!!`)
-        res.status(400).json({
+        return res.status(400).json({
             message: "Job creation error"
         })
-    }
-
+        }
+    
     Logger.info("New job created!");
-    res.status(201).json({
+    return res.status(201).json({
         _id: item._id
     })
+}
+
+const deleteJob = async (req: any, res: Response) => {
+    let id = req.params.id;
+    let user = req.user;
+    if(user) {
+        Job.findByIdAndDelete({ _id: id });
+    }
 }
 
 const isValidJobBody = (body: any): boolean => {
     if (!body)
         return false;
-    if (typeof body.title !== "string" || typeof body.body !== "string")
+    if (typeof body.title != "string" || typeof body.body != "string")
         return false;
 
     return true;

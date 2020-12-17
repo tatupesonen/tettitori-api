@@ -31,11 +31,15 @@ const createDefaultRoles = async () => {
         [{
             name: "admin",
             isAdmin: true,
-            canCreateJobPosting: true,
+            permissions: {
+                canCreateJobPosting: true,
+            }
         }, {
             name: "workplace",
             isAdmin: false,
-            canCreateJobPosting: true,
+            permissions: {
+                canCreateJobPosting: true,
+            }
         },
         ]
     roles.forEach(async r => {
