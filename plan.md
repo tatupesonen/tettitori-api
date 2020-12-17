@@ -3,14 +3,14 @@
 ## TODO
 - [x] Create initial project structure
 - [x] Set up proper logging
-- [ ] Create .env files for development and production
-- [ ] Database
-    - [ ] Prepare database to work with tests
-    - [ ] Configure in-memory database
-- [ ] Schemas
-    - [ ] Figure out the schemas we want to use with MongoDB
+- [x] Create .env files for development and production
+- [x] Database
+    - [x] Prepare database to work with tests
+    - [x] Configure in-memory database
+- [x] Schemas
+    - [x] Figure out the schemas we want to use with MongoDB
     - [ ] Figure out all the fields we want in our work practice program schema
-- [ ] Login system
-    - [ ] Routes for login
-    - [ ] How does auth flow work?
+- [x] Login system
+    - [x] Routes for login
+    - [x] How does auth flow work?
 - [ ] Dockerize
