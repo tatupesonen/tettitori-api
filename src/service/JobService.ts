@@ -2,8 +2,6 @@ import { Request, Response } from 'express';
 import Mongoose from 'mongoose';
 import Logger from '../util/logger';
 import Job from '../schema/Job';
-import * as validator from 'express-validator';
-import { ReadStream } from 'fs';
 import User from '../schema/User';
 
 //Import objectID Checker from mongoose
@@ -72,8 +70,8 @@ const createJob = async (req: any, res: Response) => {
         return res.status(400).json({
             message: "Job creation error"
         })
-        }
-    
+    }
+
     Logger.info("New job created!");
     return res.status(201).json({
         _id: item._id
@@ -83,7 +81,7 @@ const createJob = async (req: any, res: Response) => {
 const deleteJob = async (req: any, res: Response) => {
     let id = req.params.id;
     let user = req.user;
-    if(user) {
+    if (user) {
         Job.findByIdAndDelete({ _id: id });
     }
 }
