@@ -13,7 +13,6 @@ import AuthRoutes from './route/AuthRoutes'
 
 //Express middleware imports
 import bodyParser = require('body-parser');
-import cookieParser = require('cookie-parser');
 import Job from './schema/Job';
 
 //Configure express

@@ -1,4 +1,6 @@
 import Job from "../schema/Job";
+import Role from '../schema/Role';
+import User from '../schema/User';
 
 export { };
 process.env.NODE_ENV = 'test';
@@ -15,8 +17,23 @@ let should = chai.should();
 
 
 chai.use(chaiHttp);
+let testUser: any, testRole: any; //Define here for global scope
+
 //Our parent block
 describe('Jobs', () => {
+    before(async done => {
+        //Load the workplace role
+        testRole = await Role.findOne({ name: "workplace" });
+
+        //Create and load the test user
+        testUser = await User.create({
+            username: "TestRunner",
+            password: "password123",
+            email: "test@hml.fi",
+            role: testRole!._id,
+        })
+    })
+
     beforeEach((done) => { //Before each test we empty the relevant collection
         Job.deleteMany({}, (err) => {
             done();
@@ -38,7 +55,8 @@ describe('Jobs', () => {
         beforeEach((done) => {
             Job.create({
                 title: "Job in tests",
-                body: "This field would contain the body"
+                body: "This field would contain the body",
+                author: testUser!._id,
             });
             done();
         })
@@ -55,7 +73,7 @@ describe('Jobs', () => {
         });
     });
     describe('/POST create a new job without authorization', () => {
-        it('it should create a new job on server and return id', (done) => {
+        it('it should fail a new job on server and return id', (done) => {
             chai.request(server)
                 .post('/api/job')
                 .type('json')
@@ -64,8 +82,8 @@ describe('Jobs', () => {
                     "body": "We also need the body so it works"
                 })
                 .end((err: any, res: any) => {
-                    res.should.have.status(201);
-                    res.body.should.have.property('_id');
+                    res.should.have.status(400);
+                    res.body.should.not.have.property('_id');
                     done();
                 });
         });

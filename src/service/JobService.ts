@@ -2,8 +2,6 @@ import { Request, Response } from 'express';
 import Mongoose from 'mongoose';
 import Logger from '../util/logger';
 import Job from '../schema/Job';
-import * as validator from 'express-validator';
-import { ReadStream } from 'fs';
 import User from '../schema/User';
 
 //Import objectID Checker from mongoose
@@ -72,8 +70,8 @@ const createJob = async (req: any, res: Response) => {
         return res.status(400).json({
             message: "Job creation error"
         })
-        }
-    
+    }
+
     Logger.info("New job created!");
     return res.status(201).json({
         _id: item._id
@@ -89,9 +87,13 @@ const deleteJob = async (req: any, res: Response) => {
         })
     }
     let user = req.user;
+<<<<<<< HEAD
     //Only allow users to delete jobs created by them
     
     if(user) {
+=======
+    if (user) {
+>>>>>>> 11ba30c29a791bfd5c9b93dd60b53679923a6c63
         Job.findByIdAndDelete({ _id: id });
     }
 }
