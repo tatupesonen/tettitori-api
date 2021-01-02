@@ -2,6 +2,10 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
+        "typeRoots": [
+            "./types",
+            "./node_modules/@types"
+        ],
         "rootDir": "./src",
         "lib": [
             "ES6"
