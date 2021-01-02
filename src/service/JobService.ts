@@ -82,7 +82,15 @@ const createJob = async (req: any, res: Response) => {
 
 const deleteJob = async (req: any, res: Response) => {
     let id = req.params.id;
+    if(!id) {
+        Logger.error("Illegal job id");
+        return res.status(400).json({
+            message: "Illegal ID"
+        })
+    }
     let user = req.user;
+    //Only allow users to delete jobs created by them
+    
     if(user) {
         Job.findByIdAndDelete({ _id: id });
     }
