@@ -44,6 +44,7 @@ const needsRole = (allowed: [string]) => {
             //Allow anything for admin
             return next();
         }
+        //If the provided list of allowed roles contains the role of the user
         if(allowed.includes(user.role)) {
             return next();
         } else {
