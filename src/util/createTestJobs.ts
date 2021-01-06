@@ -28,11 +28,13 @@ export const createTestJobsAndAccounts = async () => {
     let jobs = [new Job({
         title: "Esimerkki työpaikkailmoituksesta",
         body: "Tähän kenttään työpaikan sisällöstä",
+        authorDisplayName: users[0].username,
         author: users[0]._id,
     }),
     new Job({
         title: "Esimerkki 2",
         body: "Tähän kenttään työpaikan sisällöstä",
+        authorDisplayName: users[1].username,
         author: users[0]._id,
     })];
 
@@ -40,8 +42,4 @@ export const createTestJobsAndAccounts = async () => {
         Logger.warn(`Creating test job ${j.title}`);
         await j.save();
     })
-}
-
-export const createTestAccounts = async () => {
-   
 }

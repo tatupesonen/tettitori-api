@@ -1,6 +1,7 @@
 //Prepare dotenv
 require('dotenv').config();
 const PORT = process.env.PORT || 3000;
+let server: any;
 
 import express from 'express';
 import Database from './util/db';
@@ -23,8 +24,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 //Import this, remove when not testing
-import { createTestJobsAndAccounts } from './util/createTestJobs';
-import { create } from 'domain';
+import { createTestJobsAndAccounts, } from './util/createTestJobs';
 
 const init = async () => {
     await Database.connect();
@@ -34,8 +34,6 @@ const init = async () => {
     //test jobs
     await createTestJobsAndAccounts();
 };
-init();
-
 
 const apiUrl = '/api';
 
@@ -43,10 +41,15 @@ const apiUrl = '/api';
 app.use(apiUrl + "/job", JobRoutes);
 app.use(apiUrl, AuthRoutes);
 
-const server = app.listen(PORT, () => {
-    Logger.info(`Service started on port ${PORT}!`);
+//Wait for server staret before we give it to the test suite
+init().then(done => {
+    server = app.listen(PORT, () => {
+        Logger.info(`Service started on port ${PORT}!`);
+        app.emit("started");
+    })
 })
 
-export default server;
+
+export default app;
 
 

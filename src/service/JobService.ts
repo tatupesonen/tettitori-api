@@ -54,6 +54,7 @@ const createJob = async (req: any, res: Response) => {
     let jobdata = req.body;
     let user = await User.findOne({ username: req.user?.username });
     jobdata.author = user?._id;
+    jobdata.authorDisplayName = user?.username;
     console.log(req.body);
 
     if (!isValidJobBody) {
@@ -72,14 +73,14 @@ const createJob = async (req: any, res: Response) => {
         })
     }
 
-    Logger.info("New job created!");
+    Logger.info(`${user?.username} created a new job!`);
     return res.status(201).json({
         _id: item._id
     })
 }
 
 const deleteJob = async (req: any, res: Response) => {
-    let id = req.params.id;
+    let id = req.query.id;
     if(!id) {
         Logger.error("Illegal job id");
         return res.status(400).json({
@@ -87,15 +88,23 @@ const deleteJob = async (req: any, res: Response) => {
         })
     }
     let user = req.user;
-<<<<<<< HEAD
     //Only allow users to delete jobs created by them
-    
     if(user) {
-=======
-    if (user) {
->>>>>>> 11ba30c29a791bfd5c9b93dd60b53679923a6c63
-        Job.findByIdAndDelete({ _id: id });
+
+        //if the user is in the jwt, find the user in DB so we can get the id.
+        user = await User.findOne({ username: user.username}).lean();
+
+        let deleteResult = await Job.findOneAndDelete({ _id: id, author: user._id }).lean();
+        if(deleteResult) {
+            Logger.info(`${user.username} deleted job ${deleteResult._id}`);
+            return res.status(200).json({
+                message: "Job deleted"
+            })
+        }
     }
+    return res.status(400).json({
+        message: "Couldn't find job for this author with given ID"
+    })
 }
 
 const isValidJobBody = (body: any): boolean => {
@@ -110,5 +119,6 @@ const isValidJobBody = (body: any): boolean => {
 
 export default {
     showJobs,
-    createJob
+    createJob,
+    deleteJob
 }

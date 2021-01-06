@@ -13,4 +13,6 @@
 - [x] Login system
     - [x] Routes for login
     - [x] How does auth flow work?
+    - [x] Auth flow working, role system working.
+    - [ ] Write tests to test the auth system.
 - [ ] Dockerize

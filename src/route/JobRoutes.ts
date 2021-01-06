@@ -13,4 +13,8 @@ JobRoutes.post('', [AuthService.authenticateToken, AuthService.needsRole(['workp
     return Service.createJob(req, res);
 })
 
+JobRoutes.delete('/', [AuthService.authenticateToken, AuthService.needsRole(['workplace'])], (req: Request, res: Response) => {
+    return Service.deleteJob(req, res);
+})
+
 export default JobRoutes;

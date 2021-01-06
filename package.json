@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc && node build/app.js",
     "dev": "nodemon",
-    "test": "npx mocha --timeout 10000 -r ts-node/register src/tests/**.ts"
+    "test": "npx mocha --timeout 30000 -r ts-node/register src/tests/**.ts"
   },
   "author": "Tatu Pesonen",
   "license": "GNU GPLv3",

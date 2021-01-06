@@ -1,7 +1,5 @@
-import { request, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { Func } from 'mocha';
-import { userInfo } from 'os';
 import User from '../schema/User';
 import Logger from '../util/logger';
 

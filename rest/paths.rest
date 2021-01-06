@@ -6,16 +6,21 @@ POST http://localhost:3000/api/login
 Content-Type: application/json
 
 {
-    "username": "testuser1",
-    "password": "password1"
+    "username": "testuser2",
+    "password": "password2"
 }
 
 ### post a job
 POST http://localhost:3000/api/job
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMSIsInJvbGUiOiJ3b3JrcGxhY2UiLCJpYXQiOjE2MDgxNzExNzB9.wpQLTiNvLkKijaq7_eaaN_M9qB224WEPimMXQtxW2xc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMSIsInJvbGUiOiJ3b3JrcGxhY2UiLCJpYXQiOjE2MDk5NDgzNjN9.zjIMjZlHNpvE44o3cRaniK2G1jYn-aB2JnolG4JFiEU
 Content-Type: application/json
 
 {
-    "title": "new job lol",
+    "title": "new job lol on testuser 1",
     "body": "hello"
 }
+
+###
+
+DELETE http://localhost:3000/api/job?id=5ff5dcb5dfed5d38dcc45729
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMiIsInJvbGUiOiJ3b3JrcGxhY2UiLCJpYXQiOjE2MDk5NDgzODB9.l0L_1I-KUKjWMvRI-OpSAsIhO_RxN1Hn-qUNuklCgZI
