@@ -2,9 +2,13 @@ import Job from '../schema/Job';
 import Logger from './logger';
 import User from '../schema/User';
 import Role from '../schema/Role';
+import Degree from '../schema/Degree';
 
 export const createTestJobsAndAccounts = async () => {
     let role = await Role.findOne({ name: "workplace"}).lean();
+    //Let's get some example degrees
+    let degrees = await Degree.find({}).limit(20);
+    //Prepare objectId list for use in notices
 
     let users = [new User({
         username: "testuser1",
@@ -30,12 +34,14 @@ export const createTestJobsAndAccounts = async () => {
         body: "Tähän kenttään työpaikan sisällöstä",
         authorDisplayName: users[0].username,
         author: users[0]._id,
+        relevantDegrees: degrees.map(d => d._id)
     }),
     new Job({
         title: "Esimerkki 2",
         body: "Tähän kenttään työpaikan sisällöstä",
         authorDisplayName: users[1].username,
         author: users[0]._id,
+        relevantDegrees: degrees.map(d => d._id)
     })];
 
     jobs.forEach(async j => {

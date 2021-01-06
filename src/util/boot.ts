@@ -1,5 +1,7 @@
 import Role, { RoleDoc } from '../schema/Role';
 import User from '../schema/User';
+import Degree from '../schema/Degree';
+import axios from 'axios';
 import Crypto from './Crypto';
 import Logger from './logger';
 
@@ -57,7 +59,34 @@ const createDefaultRoles = async () => {
     })
 }
 
+
+const loadDegrees = async () => {
+    const dataURL = "https://koski.opintopolku.fi/koski/api/koodisto/tutkintonimikkeet/latest";
+    //We load all the available degrees using KOSKI API.
+    try {
+        let response = await axios.get(dataURL);
+        let degrees = response.data.map((item: any) => {
+            //Filter only finnish metadatas into objects for now
+            return item.metadata.filter((m: any) => m.kieli === 'FI')
+        })
+
+        //Create every degree in db
+        degrees.forEach(async (d: any) => {
+            if(d[0].lyhytNimi) {
+                Degree.create({title: d[0].lyhytNimi})
+                Logger.debug(`${d[0].lyhytNimi} degree created`);
+            }
+        })
+        Logger.info("Loaded degrees from " + dataURL);
+    }
+    catch (err) {
+        Logger.error("Couldn't load available degrees. Using empty degrees list.");
+    }
+}
+
+
 export default {
     createAdminUser,
-    createDefaultRoles
+    createDefaultRoles,
+    loadDegrees
 }

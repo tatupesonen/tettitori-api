@@ -1,5 +1,5 @@
 import Mongoose from 'mongoose';
-const { Schema, Types: ObjectId } = Mongoose;
+const { Schema, Types: { ObjectId } } = Mongoose;
 
 const RoleSchema = new Schema({
     name: { type: String, minlength: 5, maxlength: 100, required: true },

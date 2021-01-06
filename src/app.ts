@@ -28,6 +28,7 @@ import { createTestJobsAndAccounts, } from './util/createTestJobs';
 
 const init = async () => {
     await Database.connect();
+    await Boot.loadDegrees();
     await Boot.createDefaultRoles();
     await Boot.createAdminUser();
 
