@@ -4,7 +4,7 @@ const { Schema, Types: { ObjectId } } = Mongoose;
 const JobSchema = new Schema({
     title: {type: String, required: true },
     body: {
-        description: { type: String },
+        description: { type: String, required: true },
         contactInfo: { type: String },
         address: { type: String },
     },

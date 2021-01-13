@@ -31,14 +31,18 @@ export const createTestJobsAndAccounts = async () => {
 
     let jobs = [new Job({
         title: "Esimerkki työpaikkailmoituksesta",
-        body: "Tähän kenttään työpaikan sisällöstä",
+        body: {
+            description: "Esimerkki kuvauskentästä"
+        },
         authorDisplayName: users[0].username,
         author: users[0]._id,
         relevantDegrees: degrees.map(d => d._id)
     }),
     new Job({
         title: "Esimerkki 2",
-        body: "Tähän kenttään työpaikan sisällöstä",
+        body: {
+            description: "Esimerkki kuvauskentästä"
+        },
         authorDisplayName: users[1].username,
         author: users[0]._id,
         relevantDegrees: degrees.map(d => d._id)

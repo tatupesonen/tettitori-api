@@ -12,15 +12,24 @@ Content-Type: application/json
 
 ### post a job
 POST http://localhost:3000/api/job
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMSIsInJvbGUiOiJ3b3JrcGxhY2UiLCJpYXQiOjE2MDk5NDgzNjN9.zjIMjZlHNpvE44o3cRaniK2G1jYn-aB2JnolG4JFiEU
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMiIsInJvbGUiOiJ3b3JrcGxhY2UiLCJpYXQiOjE2MTAwMTg1ODJ9.a7JtG8gcR5ymBWx8Ip7a8ufmYanoBAOjHqBjOfte9yk
 
 {
-    "title": "new job lol on testuser 1",
-    "body": "hello"
+    "title": "wtf",
+    "boy": {
+        "description": "<script>alert(1)</script>",
+        "contactInfo": "puh.nro 012 345 6789",
+        "address": "Olemassaolon tie 55"
+    }
 }
 
 ###
 
-DELETE http://localhost:3000/api/job?id=5ff5dcb5dfed5d38dcc45729
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMiIsInJvbGUiOiJ3b3JrcGxhY2UiLCJpYXQiOjE2MDk5NDgzODB9.l0L_1I-KUKjWMvRI-OpSAsIhO_RxN1Hn-qUNuklCgZI
+DELETE http://localhost:3000/api/job?id=5ff5e554fe20864c14bfa516
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMSIsInJvbGUiOiJ3b3JrcGxhY2UiLCJpYXQiOjE2MDk5NTA0NjV9.7Dx0lzbNI-AvZSxjVaMKlbMUlpTtAaJvE3AjF3mjl80
+
+###
+
+# Get degrees
+GET http://localhost:3000/api/degree

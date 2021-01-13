@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import Mongoose from 'mongoose';
 import Logger from '../util/logger';
-import Job from '../schema/Job';
+import Job, { JobDoc } from '../schema/Job';
 import User from '../schema/User';
+import bodyParser from 'body-parser';
 
 //Import objectID Checker from mongoose
 const isValid = Mongoose.Types.ObjectId.isValid;
@@ -54,12 +55,12 @@ const showJobs = async (req: Request, res: Response) => {
 
 const createJob = async (req: any, res: Response) => {
     let jobdata = req.body;
+    console.log(jobdata);
     let user = await User.findOne({ username: req.user?.username });
     jobdata.author = user?._id;
     jobdata.authorDisplayName = user?.username;
-    console.log(req.body);
-
-    if (!isValidJobBody) {
+    
+    if (!isValidJobBody(jobdata)) {
         Logger.warn(`${req.connection.remoteAddress} tried to create a malformed job!`);
         return res.status(400).json({
             message: "Missing fields in job creation"
@@ -109,12 +110,10 @@ const deleteJob = async (req: any, res: Response) => {
     })
 }
 
-const isValidJobBody = (body: any): boolean => {
-    if (!body)
+const isValidJobBody = (jobBody: any): boolean => {
+    console.log(jobBody);
+    if(!jobBody || !jobBody.title || !jobBody.body || !jobBody.body.description)
         return false;
-    if (typeof body.title != "string" || typeof body.body != "string")
-        return false;
-
     return true;
 }
 
