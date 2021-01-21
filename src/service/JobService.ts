@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import Mongoose from 'mongoose';
 import Logger from '../util/logger';
-import Job, { JobDoc } from '../schema/Job';
+import Job from '../schema/Job';
 import User from '../schema/User';
-import bodyParser from 'body-parser';
 
 //Import objectID Checker from mongoose
 const isValid = Mongoose.Types.ObjectId.isValid;

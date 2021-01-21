@@ -39,6 +39,33 @@ export const createTestJobsAndAccounts = async () => {
         relevantDegrees: degrees.map(d => d._id)
     }),
     new Job({
+        title: "Toinen esimerkki",
+        body: {
+            description: "Vaihtoehtoinen esimerkki."
+        },
+        authorDisplayName: users[0].username,
+        author: users[0]._id,
+        relevantDegrees: degrees.map(d => d._id)
+    }),
+    new Job({
+        title: "Eri kuvauskentällä",
+        body: {
+            description: "Tässä ilmoituksessa eri kuvauskenttä"
+        },
+        authorDisplayName: users[0].username,
+        author: users[0]._id,
+        relevantDegrees: degrees.map(d => d._id)
+    }),
+    new Job({
+        title: "Hellou!",
+        body: {
+            description: "Uusi!"
+        },
+        authorDisplayName: users[0].username,
+        author: users[0]._id,
+        relevantDegrees: degrees.map(d => d._id)
+    }),
+    new Job({
         title: "Esimerkki 2",
         body: {
             description: "Esimerkki kuvauskentästä"

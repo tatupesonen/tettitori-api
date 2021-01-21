@@ -31,23 +31,22 @@ app.use(bodyParser.urlencoded({
 }))
 
 const init = async () => {
-    await Database.connect();
-    await Boot.loadDegrees();
-    await Boot.createDefaultRoles();
-    await Boot.createAdminUser();
+  await Database.connect();
+  await Boot.loadDegrees();
+  await Boot.createDefaultRoles();
+  await Boot.createAdminUser();
 
-    if(process.env.DB_MODE === DB_MODE.ETHEREAL)
-        await createTestJobsAndAccounts();
+  if(process.env.DB_MODE === DB_MODE.ETHEREAL)
+    await createTestJobsAndAccounts();
 };
 
 const apiUrl = '/api';
-
 //Register all the routes
 app.use(apiUrl + "/job", JobRoutes);
 app.use(apiUrl + "/degree", DegreeRoutes);
 app.use(apiUrl, AuthRoutes);
 //Wait for server staret before we give it to the test suite
-init().then(done => {
+init().then(() => {
     server = app.listen(PORT, () => {
         Logger.info(`Service started on port ${PORT}!`);
         app.emit("started");
@@ -55,5 +54,6 @@ init().then(done => {
 })
 
 export default app;
+
 
 
