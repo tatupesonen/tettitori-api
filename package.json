@@ -4,7 +4,8 @@
   "description": "REST service for Tettitori (work practice program finder)",
   "main": "app.js",
   "scripts": {
-    "build": "tsc && node build/app.js",
+    "build": "tsc",
+    "start": "node build/app.js",
     "dev": "nodemon",
     "test": "npx mocha --timeout 30000 -r ts-node/register src/tests/**.ts"
   },
