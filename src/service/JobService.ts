@@ -104,7 +104,7 @@ const deleteJob = async (req: any, res: Response) => {
             })
         }
     }
-    return res.status(400).json({
+    return res.status(404).json({
         message: "Couldn't find job for this author with given ID"
     })
 }

@@ -1,4 +1,4 @@
-import Job from "../schema/Job";
+import Job, { JobDoc } from "../schema/Job";
 import Role from '../schema/Role';
 import User from '../schema/User';
 import server from '../app';
@@ -50,7 +50,12 @@ describe('Jobs', () => {
         beforeEach(async () => {
             Job.create({
                 title: "Job in tests",
-                body: "This field would contain the body",
+                authorDisplayName: "Helloust",
+                body: {
+                    description: "This field would contain the body",
+                    contactInfo: "Test contactinfo",
+                    address: "Test address"
+                 },
                 author: testUser!._id,
             });
         })
