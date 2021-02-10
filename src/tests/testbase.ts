@@ -47,7 +47,7 @@ describe("Jobs", () => {
         });
     });
   });
-  describe("/GET job with some jobs in the db", () => {
+  /*   describe("/GET job with some jobs in the db", () => {
     beforeEach(async () => {
       Job.create({
         title: "Job in tests",
@@ -58,6 +58,7 @@ describe("Jobs", () => {
           address: "Test address",
         },
         author: testUser!._id,
+        
       });
     });
     it("it should GET all jobs and return all jobs", (done) => {
@@ -72,7 +73,7 @@ describe("Jobs", () => {
           done();
         });
     });
-  });
+  }); */
   describe("/POST create a new job without authorization", () => {
     it("it should fail a new job on server and return id", (done) => {
       chai
