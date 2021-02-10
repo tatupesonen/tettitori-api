@@ -2,10 +2,15 @@ const Mongoose = require("mongoose");
 const mongoUrl = process.env.DB_HOST;
 const mode = process.env.DB_MODE;
 import { MongoMemoryServer } from "mongodb-memory-server";
+import { ConnectOptions, mongo } from "mongoose";
 import { DB_MODE } from "./Constants";
 import Logger from "./logger";
 
-Mongoose.set("useFindAndModify", false); //Remove deprecation error
+const mongoOpts: ConnectOptions = {
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+};
 
 export default {
   async connect() {
@@ -18,8 +23,7 @@ export default {
 
       let response = await this.mongooseConnection(
         {
-          useUnifiedTopology: true,
-          useNewUrlParser: true,
+          ...mongoOpts,
         },
         await mongod.getUri()
       );
@@ -36,8 +40,7 @@ export default {
           dbName: process.env.DB_NAME,
           reconnectInterval: process.env.DB_CONNECT_INTERVAL,
           reconnectTries: process.env.DB_CONNECT_TRIES,
-          useUnifiedTopology: true,
-          useNewUrlParser: true,
+          ...mongoOpts,
         },
         mongoUrl
       );
