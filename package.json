@@ -12,6 +12,7 @@
   "author": "Tatu Pesonen",
   "license": "GNU GPLv3",
   "dependencies": {
+    "@types/multer": "^1.4.5",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
@@ -21,6 +22,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.11",
+    "multer": "^1.4.2",
     "uuid": "^8.3.2",
     "winston": "^3.3.3"
   },
