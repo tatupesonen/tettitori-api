@@ -12,6 +12,7 @@ const JobSchema = new Schema({
     address: { type: String },
   },
   relevantDegrees: [{ type: ObjectId, ref: "Degree" }],
+  relevantOrientations: [{ type: ObjectId, ref: "ActivityOrientation" }],
   author: { type: ObjectId, ref: "User", required: true },
   authorDisplayName: { type: String, required: true },
 });
@@ -23,6 +24,8 @@ export interface JobDoc extends Mongoose.Document {
     contactInfo: String;
     address: String;
   };
+  relevantDegrees: typeof ObjectId[];
+  relevantOrientations: typeof ObjectId[];
   author: typeof ObjectId;
   authorDisplayName: String;
 }

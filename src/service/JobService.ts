@@ -8,7 +8,10 @@ import User from "../schema/User";
 const isValid = Mongoose.Types.ObjectId.isValid;
 
 const listAllJobs = async (req: Request, res: Response) => {
-  let list = await Job.find().populate("relevantDegrees").lean();
+  let list = await Job.find()
+    .populate("relevantDegrees")
+    .populate("relevantOrientations")
+    .lean();
   return res.status(200).json(list);
 };
 
@@ -25,7 +28,10 @@ const listSingleJob = async (req: Request, res: Response) => {
   let job: any = {};
 
   if (isValid(filterObject._id)) {
-    job = await Job.findOne(filterObject).populate("relevantDegrees").lean();
+    job = await Job.findOne(filterObject)
+      .populate("relevantDegrees")
+      .populate("relevantOrientations")
+      .lean();
   } else {
     Logger.warn(
       `Request came with malformed ObjectID from ${req.connection.remoteAddress}`
@@ -52,7 +58,6 @@ const showJobs = async (req: Request, res: Response) => {
 
 const createJob = async (req: any, res: Response) => {
   let jobdata = req.body;
-  console.log(jobdata);
   let user = await User.findOne({ username: req.user?.username });
   jobdata.author = user?._id;
   jobdata.authorDisplayName = user?.username;

@@ -3,9 +3,11 @@ import Logger from "./logger";
 import User from "../schema/User";
 import Role from "../schema/Role";
 import Degree from "../schema/Degree";
+import ActivityOrientation from "../schema/ActivityOrientation";
 
 export const createTestJobsAndAccounts = async () => {
   let role = await Role.findOne({ name: "workplace" }).lean();
+  let orientations = await ActivityOrientation.find({});
   //Let's get some example degrees
   let degrees = await Degree.find({}).limit(20);
   //Prepare objectId list for use in notices
@@ -39,6 +41,7 @@ export const createTestJobsAndAccounts = async () => {
       authorDisplayName: users[0].username,
       author: users[0]._id,
       relevantDegrees: degrees.map((d) => d._id),
+      relevantOrientations: orientations.map((o) => o._id),
     }),
     new Job({
       title: "Toinen esimerkki",
