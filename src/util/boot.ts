@@ -1,9 +1,13 @@
 import Role, { RoleDoc } from "../schema/Role";
 import User from "../schema/User";
 import Degree from "../schema/Degree";
+import ActivityOrientation from "../schema/ActivityOrientation";
 import axios from "axios";
 import Crypto from "./Crypto";
 import Logger from "./logger";
+
+//Import fs
+import fs from "fs/promises";
 
 const createAdminUser = async () => {
   let role = await Role.findOne({
@@ -26,6 +30,20 @@ const createAdminUser = async () => {
   } else {
     Logger.info("Admin user exists, not creating a new one.");
   }
+};
+
+const createDefaultActivityOrientations = async () => {
+  let data = await fs.readFile("data/orientations.json", "utf-8");
+  const orientations = JSON.parse(data);
+  orientations.forEach((o: any) => {
+    ActivityOrientation.findOneAndUpdate(
+      { title: o.title },
+      { $set: o },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    ).then((val) => {
+      Logger.info(`Created activity orientation ${val.title}`);
+    });
+  });
 };
 
 const createDefaultRoles = async () => {
@@ -92,4 +110,5 @@ export default {
   createAdminUser,
   createDefaultRoles,
   loadDegrees,
+  createDefaultActivityOrientations,
 };

@@ -22,6 +22,7 @@ import { createTestJobsAndAccounts } from "./util/createTestJobs";
 //Express middleware imports
 import bodyParser = require("body-parser");
 import Job from "./schema/Job";
+import ActivityOrientationRoutes from "./route/ActivityOrientationRoutes";
 
 //Configure express & some middleware
 const app = express();
@@ -35,6 +36,7 @@ app.use(
 
 const init = async () => {
   await Database.connect();
+  await Boot.createDefaultActivityOrientations();
   await Boot.loadDegrees();
   await Boot.createDefaultRoles();
   await Boot.createAdminUser();
@@ -48,6 +50,7 @@ const apiUrl = "/api";
 app.use(apiUrl + "/job", JobRoutes);
 app.use(apiUrl + "/degree", DegreeRoutes);
 app.use(apiUrl + "/attachment", AttachmentRoutes);
+app.use(apiUrl + "/orientation", ActivityOrientationRoutes);
 app.use(apiUrl, AuthRoutes);
 //Wait for server staret before we give it to the test suite
 init().then(() => {
