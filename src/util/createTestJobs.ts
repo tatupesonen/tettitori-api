@@ -17,13 +17,13 @@ export const createTestJobsAndAccounts = async () => {
       username: "testuser1",
       password: "password1",
       email: "test@test.fi",
-      role: role._id,
+      role: role?._id,
     }),
     new User({
       username: "testuser2",
       password: "password2",
       email: "test2@test.fi",
-      role: role._id,
+      role: role?._id,
     }),
   ];
 

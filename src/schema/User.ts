@@ -23,11 +23,11 @@ const UserSchema = new Schema({
   role: { type: ObjectId, ref: "Role", required: true },
 });
 
-export interface IUser extends Mongoose.Document {
+export interface UserDoc extends Mongoose.Document {
   username: String;
   password: String;
   email: String;
   role: typeof ObjectId;
 }
 
-export default Mongoose.model<IUser>("User", UserSchema);
+export default Mongoose.model<UserDoc>("User", UserSchema);
