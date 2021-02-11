@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { IUser } from '../schema/User';
 import jwt from "jsonwebtoken";
 import User from "../schema/User";
 import Logger from "../util/logger";
@@ -10,6 +11,7 @@ const Login = async (req: Request, res: Response) => {
     //try to find the user
     let user = await User.findOne({ username: req.body.username })
       .populate("role")
+      .lean() as IUser;
     if (user && user.password === req.body.password) {
       Logger.info(`User ${user.username} logged in successfully!`);
       let jwtUser = { username: user.username, role: user.role.name };
