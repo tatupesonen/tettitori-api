@@ -6,10 +6,19 @@ const {
 
 const JobSchema = new Schema({
   title: { type: String, required: true },
+  companyName: { type: String, required: true },
   body: {
     description: { type: String, required: true },
-    contactInfo: { type: String },
-    address: { type: String },
+    additionalInfo: { type: String },
+    contactInfo: {
+      email: { type: String, required: true },
+      phoneNumber: { type: String, required: true },
+    },
+    address: {
+      streetaddress: { type: String },
+      zipcode: { type: String },
+      city: { type: String },
+    },
   },
   relevantDegrees: [{ type: ObjectId, ref: "Degree" }],
   relevantOrientations: [{ type: ObjectId, ref: "ActivityOrientation" }],
@@ -18,16 +27,25 @@ const JobSchema = new Schema({
 });
 
 export interface JobDoc extends Mongoose.Document {
-  title: String;
+  title: string;
+  companyName: string;
   body: {
-    description: String;
-    contactInfo: String;
-    address: String;
+    description: string;
+    additionalInfo: string;
+    contactInfo: {
+      email: string;
+      phoneNumber: string;
+    };
+    address: {
+      streetaddress: string;
+      zipcode: string;
+      city: string;
+    };
   };
   relevantDegrees: typeof ObjectId[];
   relevantOrientations: typeof ObjectId[];
   author: typeof ObjectId;
-  authorDisplayName: String;
+  authorDisplayName: string;
 }
 
 export default Mongoose.model<JobDoc>("Job", JobSchema);

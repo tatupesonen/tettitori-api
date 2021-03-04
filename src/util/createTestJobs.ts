@@ -1,4 +1,4 @@
-import Job from "../schema/Job";
+import Job, { JobDoc } from "../schema/Job";
 import Logger from "./logger";
 import User from "../schema/User";
 import Role from "../schema/Role";
@@ -34,48 +34,63 @@ export const createTestJobsAndAccounts = async () => {
 
   let jobs = [
     new Job({
-      title: "Esimerkki työpaikkailmoituksesta",
+      title: "Asiakaspalvelu",
+      companyName: "Pertin puuhailu Oy",
       body: {
         description: "Esimerkki kuvauskentästä",
+        additionalInfo: "Yhteydenotot puhelimitse",
+        contactInfo: {
+          email: "test@google.com",
+          phoneNumber: "045 55 2155",
+        },
+        address: {
+          city: "Hameenlinna",
+          zipcode: "13700",
+          streetaddress: "Pertinkatu 55",
+        },
       },
       authorDisplayName: users[0].username,
       author: users[0]._id,
       relevantDegrees: degrees.map((d) => d._id),
       relevantOrientations: orientations.map((o) => o._id),
-    }),
+    } as JobDoc),
     new Job({
-      title: "Toinen esimerkki",
-      body: {
-        description: "Vaihtoehtoinen esimerkki.",
-      },
-      authorDisplayName: users[0].username,
-      author: users[0]._id,
-      relevantDegrees: degrees.map((d) => d._id),
-    }),
-    new Job({
-      title: "Eri kuvauskentällä",
-      body: {
-        description: "Tässä ilmoituksessa eri kuvauskenttä",
-      },
-      authorDisplayName: users[0].username,
-      author: users[0]._id,
-      relevantDegrees: degrees.map((d) => d._id),
-    }),
-    new Job({
-      title: "Hellou!",
-      body: {
-        description: "Uusi!",
-      },
-      authorDisplayName: users[0].username,
-      author: users[0]._id,
-      relevantDegrees: degrees.map((d) => d._id),
-    }),
-    new Job({
-      title: "Esimerkki 2",
+      title: "Asiakaspalvelu",
+      companyName: "Pertin puuhailu Oy",
       body: {
         description: "Esimerkki kuvauskentästä",
+        additionalInfo: "Yhteydenotot puhelimitse",
+        contactInfo: {
+          email: "test@google.com",
+          phoneNumber: "045 55 2155",
+        },
+        address: {
+          city: "Hameenlinna",
+          zipcode: "13700",
+          streetaddress: "Pertinkatu 55",
+        },
       },
-      authorDisplayName: users[1].username,
+      authorDisplayName: users[0].username,
+      author: users[0]._id,
+      relevantDegrees: degrees.map((d) => d._id),
+    } as JobDoc),
+    new Job({
+      title: "Puutöitä",
+      companyName: "Pertin puuhailu Oy",
+      body: {
+        description: "Esimerkki kuvauskentästä",
+        additionalInfo: "Yhteydenotot puhelimitse",
+        contactInfo: {
+          email: "test@google.com",
+          phoneNumber: "045 55 2155",
+        },
+        address: {
+          city: "Hameenlinna",
+          zipcode: "13700",
+          streetaddress: "Pertinkatu 55",
+        },
+      },
+      authorDisplayName: users[0].username,
       author: users[0]._id,
       relevantDegrees: degrees.map((d) => d._id),
     }),
