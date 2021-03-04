@@ -8,7 +8,6 @@
     "lib": ["ES6"],
     "outDir": "./build",
     "esModuleInterop": true,
-    "strict": true,
-    "excludes": ["tests/*"]
+    "strict": true
   }
 }

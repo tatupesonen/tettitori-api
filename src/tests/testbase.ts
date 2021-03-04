@@ -1,4 +1,4 @@
-import Job, { JobDoc } from "../schema/Job";
+/* import Job, { JobDoc } from "../schema/Job";
 import Role from "../schema/Role";
 import User from "../schema/User";
 import server from "../app";
@@ -47,7 +47,7 @@ describe("Jobs", () => {
         });
     });
   });
-  /*   describe("/GET job with some jobs in the db", () => {
+  describe("/GET job with some jobs in the db", () => {
     beforeEach(async () => {
       Job.create({
         title: "Job in tests",
@@ -73,7 +73,7 @@ describe("Jobs", () => {
           done();
         });
     });
-  }); */
+  });
   describe("/POST create a new job without authorization", () => {
     it("it should fail a new job on server and return id", (done) => {
       chai
@@ -92,3 +92,4 @@ describe("Jobs", () => {
     });
   });
 });
+ */
