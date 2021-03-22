@@ -1,4 +1,4 @@
-import Role, { RoleDoc } from "../schema/Role";
+import Role, { IRole } from "../schema/Role";
 import User from "../schema/User";
 import Degree from "../schema/Degree";
 import ActivityOrientation from "../schema/ActivityOrientation";

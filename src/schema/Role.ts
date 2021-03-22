@@ -12,10 +12,11 @@ const RoleSchema = new Schema({
   },
 });
 
-export interface RoleDoc extends Mongoose.Document {
+export interface IRole {
+  _id: typeof ObjectId;
   name: String;
   isAdmin: Boolean;
   canCreateJobPosting: Boolean;
 }
 
-export default Mongoose.model<RoleDoc>("Role", RoleSchema);
+export default Mongoose.model<IRole & Mongoose.Document>("Role", RoleSchema);

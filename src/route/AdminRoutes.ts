@@ -19,4 +19,13 @@ AdminRoutes.delete(
     return Service.deleteUser(req, res);
   }
 );
+
+AdminRoutes.post(
+  "/user",
+  [AuthService.authenticateToken, AuthService.needsRole(["admin"])],
+  (req: Request, res: Response) => {
+    return Service.createUser(req, res);
+  }
+);
+
 export default AdminRoutes;

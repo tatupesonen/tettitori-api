@@ -1,4 +1,5 @@
 import Mongoose from "mongoose";
+import { IRole } from "./Role";
 const {
   Schema,
   Types: { ObjectId },
@@ -27,7 +28,7 @@ export interface IUser {
   username: String;
   password: String;
   email: String;
-  role: typeof ObjectId;
+  role: typeof ObjectId | IRole;
 }
 
 export default Mongoose.model<IUser & Mongoose.Document>("User", UserSchema);
