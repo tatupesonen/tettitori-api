@@ -6,14 +6,14 @@ POST http://localhost:3000/api/login
 Content-Type: application/json
 
 {
-    "username": "testuser2",
-    "password": "password2"
+    "username": "testuser1",
+    "password": "777f0a5e-857a-4da0-916d-531231716bb3"
 }
 
 ### post a job
 POST http://localhost:3000/api/job
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMiIsInJvbGUiOiJ3b3JrcGxhY2UiLCJpYXQiOjE2MTAwMTg1ODJ9.a7JtG8gcR5ymBWx8Ip7a8ufmYanoBAOjHqBjOfte9yk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjE1ODE3NTY5fQ.vB-OhGlHlnlm37IkgcjQPLo8TLGrfp1e1LycAUcmZFA
 
 {
     "title": "wtf",
@@ -26,26 +26,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 ###
 
-DELETE http://localhost:3000/api/job?id=5ff5e554fe20864c14bfa516
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMSIsInJvbGUiOiJ3b3JrcGxhY2UiLCJpYXQiOjE2MDk5NTA0NjV9.7Dx0lzbNI-AvZSxjVaMKlbMUlpTtAaJvE3AjF3mjl80
-Host: localhost:3000
-Connection: keep-alive
-Pragma: no-cache
-Cache-Control: no-cache
-sec-ch-ua: "Chromium";v="88", "Google Chrome";v="88", ";Not A Brand";v="99"
-Accept: application/json, text/plain, */*
-DNT: 1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMSIsInJvbGUiOiJ3b3JrcGxhY2UiLCJpYXQiOjE2MTE3ODgyNTZ9.PMvW4CRohoBOohAELWdnKZiX46IS4Z6dahHeAkgJimU
-sec-ch-ua-mobile: ?0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36
-Origin: http://localhost:3001
-Sec-Fetch-Site: same-site
-Sec-Fetch-Mode: cors
-Sec-Fetch-Dest: empty
-Referer: http://localhost:3001/
-Accept-Encoding: gzip, deflate, br
-Accept-Language: en-US,en;q=0.9,fi;q=0.8
+DELETE http://localhost:3000/api/job?id=604f6d4df2a97b0bef72c1e4
+Authorization: Bearer 777f0a5e-857a-4da0-916d-531231716bb3
 ###
 
 # Get degrees
 GET http://localhost:3000/api/degree
+###
+
+# Get all users as admin
+GET http://localhost:3000/api/admin/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjE1ODE5NTI1fQ.D-ql_4o_cl_nNp76l69PGEHcxUa29QiplpfTuN36Hwk

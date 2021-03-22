@@ -23,6 +23,7 @@ import { createTestJobsAndAccounts } from "./util/createTestJobs";
 import bodyParser = require("body-parser");
 import Job from "./schema/Job";
 import ActivityOrientationRoutes from "./route/ActivityOrientationRoutes";
+import AdminRoutes from "./route/AdminRoutes";
 
 //Configure express & some middleware
 const app = express();
@@ -51,6 +52,7 @@ app.use(apiUrl + "/job", JobRoutes);
 app.use(apiUrl + "/degree", DegreeRoutes);
 app.use(apiUrl + "/attachment", AttachmentRoutes);
 app.use(apiUrl + "/orientation", ActivityOrientationRoutes);
+app.use(apiUrl + "/admin", AdminRoutes);
 app.use(apiUrl, AuthRoutes);
 //Wait for server staret before we give it to the test suite
 init().then(() => {

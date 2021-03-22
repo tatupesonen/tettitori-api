@@ -98,11 +98,20 @@ const deleteJob = async (req: any, res: Response) => {
   //Only allow users to delete jobs created by them
   if (user) {
     //if the user is in the jwt, find the user in DB so we can get the id.
-    user = await User.findOne({ username: user.username }).lean();
+    let dbuser = await User.findOne({ username: user.username }).lean();
+
+    //admin mode deletion
+    if (user.role === "admin") {
+      Logger.warn(`Deleting ${id} as admin`);
+      let deleteResult = await Job.findOneAndDelete({ _id: id }).lean();
+      console.log(deleteResult);
+      if (deleteResult)
+        return res.status(200).json({ message: "Job deleted as admin" });
+    }
 
     let deleteResult = await Job.findOneAndDelete({
       _id: id,
-      author: user._id,
+      author: dbuser._id,
     }).lean();
     if (deleteResult) {
       Logger.info(`${user.username} deleted job ${deleteResult._id}`);
