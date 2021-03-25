@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IUser } from '../schema/User';
+import { IUser } from "../schema/User";
 import jwt from "jsonwebtoken";
 import User from "../schema/User";
 import Logger from "../util/logger";
@@ -9,13 +9,13 @@ import Logger from "../util/logger";
 const Login = async (req: Request, res: Response) => {
   if (req.body.password && req.body.username) {
     //try to find the user
-    let user = await User.findOne({ username: req.body.username })
+    let user = (await User.findOne({ username: req.body.username })
       .populate("role")
-      .lean() as IUser;
+      .lean()) as IUser;
     if (user && user.password === req.body.password) {
       Logger.info(`User ${user.username} logged in successfully!`);
       let jwtUser = { username: user.username, role: user.role.name };
-      let accessToken = jwt.sign(jwtUser, process.env.ACCESS_TOKEN_SECRET!);
+      let accessToken = jwt.sign(jwtUser, `${process.env.ACCESS_TOKEN_SECRET}`);
       return res.status(200).json({ accessToken });
     } else {
       return res.status(401).json({ message: "Wrong username or password" });
@@ -30,11 +30,15 @@ const authenticateToken = (req: any, res: Response, next: Function) => {
   const token = authHeader?.split(" ")[1];
   if (token == null) return res.sendStatus(401);
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err: any, user: any) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
+  jwt.verify(
+    token,
+    `${process.env.ACCESS_TOKEN_SECRET}`,
+    (err: any, user: any) => {
+      if (err) return res.sendStatus(403);
+      req.user = user;
+      next();
+    }
+  );
 };
 
 const needsRole = (allowed: [string]) => {

@@ -24,6 +24,7 @@ import bodyParser = require("body-parser");
 import Job from "./schema/Job";
 import ActivityOrientationRoutes from "./route/ActivityOrientationRoutes";
 import AdminRoutes from "./route/AdminRoutes";
+import logger from "./util/logger";
 
 //Configure express & some middleware
 const app = express();
@@ -41,7 +42,7 @@ const init = async () => {
   await Boot.loadDegrees();
   await Boot.createDefaultRoles();
   await Boot.createAdminUser();
-
+  logger.info(`Got env vars: ${process.env.ACCESS_TOKEN_SECRET}`);
   if (process.env.DB_MODE === DB_MODE.ETHEREAL)
     await createTestJobsAndAccounts();
 };
