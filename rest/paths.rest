@@ -6,8 +6,8 @@ POST http://localhost:3000/api/login
 Content-Type: application/json
 
 {
-    "username": "testuser1",
-    "password": "777f0a5e-857a-4da0-916d-531231716bb3"
+    "username": "admin",
+    "password": "58d771e2-a4da-4d9a-9418-61a35d2e33c4"
 }
 
 ### post a job
@@ -27,7 +27,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 ###
 
 DELETE http://localhost:3000/api/job?id=604f6d4df2a97b0bef72c1e4
-Authorization: Bearer 777f0a5e-857a-4da0-916d-531231716bb3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjE2NDU5MTczfQ.DT1XA9yNae9XLSKV-j9DXMknmdGlcpe8720ynTJ_e5g
 ###
 
 # Get degrees
@@ -37,3 +37,7 @@ GET http://localhost:3000/api/degree
 # Get all users as admin
 GET http://localhost:3000/api/admin/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjE1ODE5NTI1fQ.D-ql_4o_cl_nNp76l69PGEHcxUa29QiplpfTuN36Hwk
+
+# Delete user as admin
+DELETE http://localhost:3000/api/admin/user?id=60593575f8fafd6a78046803
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjE2NDU5MjMzfQ.QsKubCMvU_j-HHLPeDEzOZqcz0F-ax-q4cKr3Xrejnw

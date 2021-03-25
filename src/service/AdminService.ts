@@ -67,7 +67,7 @@ const createUser = async (req: Request, res: Response) => {
   const user = new User(userdata);
   let userInDb = await user.save();
   if (userInDb) {
-    logger.info("User created:", userdata.username);
+    logger.info("User created:" + userdata.username);
     return res.status(201).json(userdata);
   }
   return res.status(500).json({ message: "Database connection failed" });
