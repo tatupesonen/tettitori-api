@@ -41,3 +41,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 # Delete user as admin
 DELETE http://localhost:3000/api/admin/user?id=60593575f8fafd6a78046803
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjE2NDU5MjMzfQ.QsKubCMvU_j-HHLPeDEzOZqcz0F-ax-q4cKr3Xrejnw
+
+
+###
+
+# Try register without captcha
+POST http://localhost:8080/api/register
+Content-Type: application/json
+
+{
+    "username": "nnari",
+    "email": "test"
+}

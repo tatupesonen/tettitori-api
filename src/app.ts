@@ -1,6 +1,6 @@
 //Prepare dotenv
 require("dotenv").config();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 let server: any;
 
 import express from "express";
@@ -25,6 +25,7 @@ import Job from "./schema/Job";
 import ActivityOrientationRoutes from "./route/ActivityOrientationRoutes";
 import AdminRoutes from "./route/AdminRoutes";
 import logger from "./util/logger";
+import RegistrationRoutes from "./route/RegisterRoutes";
 
 //Configure express & some middleware
 const app = express();
@@ -54,6 +55,7 @@ app.use(apiUrl + "/degree", DegreeRoutes);
 app.use(apiUrl + "/attachment", AttachmentRoutes);
 app.use(apiUrl + "/orientation", ActivityOrientationRoutes);
 app.use(apiUrl + "/admin", AdminRoutes);
+app.use(apiUrl + "/register", RegistrationRoutes);
 app.use(apiUrl, AuthRoutes);
 //Wait for server staret before we give it to the test suite
 init().then(() => {
