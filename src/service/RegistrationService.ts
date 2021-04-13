@@ -53,7 +53,10 @@ const RegisterUser = async (req: Request, res: Response) => {
     if (userInDb) {
       logger.info("User created:" + userdata.username);
       const email = await emailClient.send({
-        from: "admin@tettila.fi",
+        from: {
+          email: "admin@tettila.fi",
+          name: "Tettilä",
+        },
         to: `${userdata.email}`,
         subject: "Tunnuksesi Tettilään",
         templateId: process.env.SENDGRID_TEMPLATEID || "",
