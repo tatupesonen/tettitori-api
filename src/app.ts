@@ -43,7 +43,9 @@ const init = async () => {
   await Boot.loadDegrees();
   await Boot.createDefaultRoles();
   await Boot.createAdminUser();
-  logger.info(`Got env vars: ${process.env.ACCESS_TOKEN_SECRET}`);
+  logger.info(`Got env vars: ${process.env.ACCESS_TOKEN_SECRET}
+  ${process.env.RECAPTCHA_SECRET}
+  ${process.env.SENDGRID_APIKEY}`);
   if (process.env.DB_MODE === DB_MODE.ETHEREAL)
     await createTestJobsAndAccounts();
 };
