@@ -31,6 +31,7 @@ const RegisterUser = async (req: Request, res: Response) => {
       },
     }
   );
+
   if (recaptchaCheck?.data?.success) {
     const password = Math.random().toString(36).slice(-11);
     //check that the given username doesn't already exist
@@ -48,8 +49,20 @@ const RegisterUser = async (req: Request, res: Response) => {
 
     const user = new User(userdata);
     let userInDb = await user.save();
+
     if (userInDb) {
       logger.info("User created:" + userdata.username);
+      const email = await emailClient.send({
+        from: "admin@tettila.fi",
+        to: `${userdata.email}`,
+        subject: "Tunnuksesi Tettilään",
+        templateId: process.env.SENDGRID_TEMPLATEID || "",
+        dynamicTemplateData: {
+          username: userdata.username,
+          password: userdata.password,
+        },
+      });
+      console.log(email);
       return res.status(201).json({ message: "User created" });
     }
   }
