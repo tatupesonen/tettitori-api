@@ -70,20 +70,23 @@ const createJob = async (req: any, res: Response) => {
       message: "Missing fields in job creation",
     });
   }
+  try {
+    let job = new Job(jobdata);
+    let item = await job.save();
+    if (!item) {
+      Logger.error(`Could not save a new job!!`);
+      return res.status(400).json({
+        message: "Job creation error",
+      });
+    }
 
-  let job = new Job(jobdata);
-  let item = await job.save();
-  if (!item) {
-    Logger.error(`Could not save a new job!!`);
-    return res.status(400).json({
-      message: "Job creation error",
+    Logger.info(`${user?.username} created a new job!`);
+    return res.status(201).json({
+      _id: item._id,
     });
+  } catch (err) {
+    return res.status(500);
   }
-
-  Logger.info(`${user?.username} created a new job!`);
-  return res.status(201).json({
-    _id: item._id,
-  });
 };
 
 const deleteJob = async (req: any, res: Response) => {
@@ -127,7 +130,13 @@ const deleteJob = async (req: any, res: Response) => {
 
 const isValidJobBody = (jobBody: any): boolean => {
   console.log(jobBody);
-  if (!jobBody || !jobBody.title || !jobBody.body || !jobBody.body.description)
+  if (
+    !jobBody ||
+    !jobBody.title ||
+    !jobBody.body ||
+    !jobBody.body.description ||
+    !jobBody.body.author
+  )
     return false;
   return true;
 };
