@@ -135,7 +135,7 @@ const isValidJobBody = (jobBody: any): boolean => {
     !jobBody.title ||
     !jobBody.body ||
     !jobBody.body.description ||
-    !jobBody.body.author
+    !jobBody.author
   )
     return false;
   return true;
