@@ -96,11 +96,23 @@ const loadDegrees = async () => {
     //Create every degree in db
     degrees.forEach(async (d: any) => {
       if (d[0].lyhytNimi) {
-        Degree.create({ title: d[0].lyhytNimi });
+        await Degree.findOneAndUpdate(
+          { title: d[0].lyhytNimi },
+          { $set: { title: d[0].lyhytNimi } },
+          {
+            upsert: true,
+            new: true,
+            setDefaultsOnInsert: true,
+          }
+        );
         Logger.debug(`${d[0].lyhytNimi} degree created`);
       }
     });
-    Logger.info("Loaded degrees from " + dataURL);
+    const total = await Degree.count();
+    Logger.info(
+      "Loaded degrees from " + dataURL + ", total documents count: " + total
+    );
+    Logger.info();
   } catch (err) {
     Logger.error("Couldn't load available degrees. Using empty degrees list.");
   }
