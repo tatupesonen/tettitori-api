@@ -17,6 +17,14 @@ JobRoutes.post(
   }
 );
 
+JobRoutes.put(
+  "/",
+  [AuthService.authenticateToken, AuthService.needsRole(["workplace"])],
+  (req: Request, res: Response) => {
+    return Service.editJob(req, res);
+  }
+);
+
 JobRoutes.delete(
   "/",
   [AuthService.authenticateToken, AuthService.needsRole(["workplace"])],

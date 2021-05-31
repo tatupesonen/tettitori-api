@@ -89,6 +89,44 @@ const createJob = async (req: any, res: Response) => {
   }
 };
 
+const editJob = async (req: any, res: Response) => {
+  const { id } = req.query;
+  let jobdata = req.body;
+  let user = await User.findOne({ username: req.user?.username });
+
+  // Check that the user is editing his own notice, unless admin.
+
+  jobdata.author = user?._id;
+  jobdata.authorDisplayName = user?.username;
+
+  if (!isValidJobBody(jobdata)) {
+    Logger.warn(
+      `${req.connection.remoteAddress} tried to create a malformed job!`
+    );
+    return res.status(400).json({
+      message: "Missing fields in job editing",
+    });
+  }
+  try {
+    // editing
+    const done = await Job.findOneAndUpdate(
+      { _id: id, author: user?._id },
+      jobdata
+    );
+    if (!done) {
+      Logger.error(`Could not edit job`);
+      return res.status(400).json({
+        message: "Job editing error",
+      });
+    }
+
+    Logger.info(`${user?.username} edited new job!`);
+    return res.status(201).json();
+  } catch (err) {
+    return res.status(500);
+  }
+};
+
 const deleteJob = async (req: any, res: Response) => {
   let id = req.query.id;
   if (!id) {
@@ -145,4 +183,5 @@ export default {
   showJobs,
   createJob,
   deleteJob,
+  editJob,
 };
