@@ -1,3 +1,4 @@
+// DB mode enum
 enum DB_MODE {
   PERSISTENT = "PERSISTENT",
   ETHEREAL = "ETHEREAL",

@@ -5,6 +5,7 @@ import Role from "../schema/Role";
 import Degree from "../schema/Degree";
 import ActivityOrientation from "../schema/ActivityOrientation";
 
+// Only used in ethereal DB mode to have some testing data when the API runs.
 export const createTestJobsAndAccounts = async () => {
   let role = await Role.findOne({ name: "workplace" }).lean();
   let orientations = await ActivityOrientation.find({});

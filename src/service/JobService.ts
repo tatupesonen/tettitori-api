@@ -7,17 +7,21 @@ import User from "../schema/User";
 //Import objectID Checker from mongoose
 const isValid = Mongoose.Types.ObjectId.isValid;
 
+// Handler to fetch all jobs. Responds to the HTTP GET with a list of jobs in a JSON format.
 const listAllJobs = async (req: Request, res: Response) => {
   let list = await Job.find()
+    // Populate relation fields
     .populate("relevantDegrees")
     .populate("relevantOrientations")
     .lean();
   return res.status(200).json(list);
 };
 
+// Get one job with query.
 const listSingleJob = async (req: Request, res: Response) => {
   let filterObject: any = {};
 
+  // Create filter for Mongoose
   if (req.query.id) {
     filterObject._id = req.query.id;
   }
@@ -27,6 +31,7 @@ const listSingleJob = async (req: Request, res: Response) => {
 
   let job: any = {};
 
+  // Check the passed ObjectID is valid
   if (isValid(filterObject._id)) {
     job = await Job.findOne(filterObject)
       .populate("relevantDegrees")
@@ -46,6 +51,7 @@ const listSingleJob = async (req: Request, res: Response) => {
   return res.status(200).json(job);
 };
 
+// Send all jobs if no params, find with query if params.
 const showJobs = async (req: Request, res: Response) => {
   //If no queryid or name, list all
   if (!req.query.id && !req.query.name) {
@@ -56,12 +62,18 @@ const showJobs = async (req: Request, res: Response) => {
   }
 };
 
+// Service handler to create a new job posting.
 const createJob = async (req: any, res: Response) => {
+  // Get data from req.body;
   let jobdata = req.body;
+  // Check that the user is valid and exists in database
   let user = await User.findOne({ username: req.user?.username });
+  // Set relation on Job to the user creating it.
   jobdata.author = user?._id;
+  // Also assing displayName, currently unused.
   jobdata.authorDisplayName = user?.username;
 
+  // Validate job body
   if (!isValidJobBody(jobdata)) {
     Logger.warn(
       `${req.connection.remoteAddress} tried to create a malformed job!`
@@ -70,6 +82,7 @@ const createJob = async (req: any, res: Response) => {
       message: "Missing fields in job creation",
     });
   }
+  // Perform saving
   try {
     let job = new Job(jobdata);
     let item = await job.save();
@@ -81,6 +94,7 @@ const createJob = async (req: any, res: Response) => {
     }
 
     Logger.info(`${user?.username} created a new job!`);
+    // Successful safe, respond with created item ID.
     return res.status(201).json({
       _id: item._id,
     });
@@ -89,6 +103,7 @@ const createJob = async (req: any, res: Response) => {
   }
 };
 
+// Same as previous but check that there is an existing post.
 const editJob = async (req: any, res: Response) => {
   const { id } = req.query;
   let jobdata = req.body;
@@ -108,7 +123,7 @@ const editJob = async (req: any, res: Response) => {
     });
   }
   try {
-    // editing
+    // Only find jobs that this user created.
     const done = await Job.findOneAndUpdate(
       { _id: id, author: user?._id },
       jobdata
@@ -127,6 +142,7 @@ const editJob = async (req: any, res: Response) => {
   }
 };
 
+// Deletes a job
 const deleteJob = async (req: any, res: Response) => {
   let id = req.query.id;
   if (!id) {
@@ -150,6 +166,7 @@ const deleteJob = async (req: any, res: Response) => {
         return res.status(200).json({ message: "Job deleted as admin" });
     }
 
+    // Only find jobs where the author is the same user deleting
     let deleteResult = await Job.findOneAndDelete({
       _id: id,
       author: dbuser._id,
@@ -166,6 +183,7 @@ const deleteJob = async (req: any, res: Response) => {
   });
 };
 
+// Function to validate job body, returns boolean based on validity.
 const isValidJobBody = (jobBody: any): boolean => {
   console.log(jobBody);
   if (

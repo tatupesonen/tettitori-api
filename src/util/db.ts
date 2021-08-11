@@ -6,6 +6,7 @@ import { ConnectOptions, mongo } from "mongoose";
 import { DB_MODE } from "./Constants";
 import Logger from "./logger";
 
+// Mongo options used for all instance connections
 const mongoOpts: ConnectOptions = {
   useFindAndModify: false,
   useUnifiedTopology: true,
@@ -21,18 +22,22 @@ export default {
         `Attempting to connect to database on ${await mongod.getUri()}`
       );
 
+      // Spread in mongo opts. This creates an in memory server.
       let response = await this.mongooseConnection(
         {
           ...mongoOpts,
         },
+        // Gets URI from MongoMemoryServer
         await mongod.getUri()
       );
       if (response) {
         console.log(response);
       }
+      // Successfully connected
       Logger.info(`Connected using DB mode ${mode}`);
     } else {
       Logger.info(`Attempting to connect to database on ${mongoUrl}`);
+      // Connect to MongoDB instance
       let response = await this.mongooseConnection(
         {
           user: process.env.DB_USERNAME,
@@ -51,9 +56,10 @@ export default {
     }
   },
 
+  // Asynchronous wrapper for creating Mongoose connections
   mongooseConnection(parameters: any, mongo_url: any) {
     return new Promise((resolve: any, reject: any) => {
-      Mongoose.connect(mongo_url, parameters, function (err: Error) {
+      Mongoose.connect(mongo_url, parameters, (err: Error) => {
         if (err) {
           return reject(err);
         }

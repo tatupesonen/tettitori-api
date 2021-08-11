@@ -5,16 +5,18 @@ import ActivityOrientation from "../schema/ActivityOrientation";
 import axios from "axios";
 import Crypto from "./Crypto";
 import Logger from "./logger";
-
-//Import fs
 import fs from "fs/promises";
 
+// Function that creates an admin role if one does not yet exist in the database
 const createAdminUser = async () => {
+  // Find role to attach to admin user
   let role = await Role.findOne({
     name: "admin",
   });
+  // Generate initial password
   let adminpass = Crypto.generateUUID();
 
+  // Prepare admin object. This is not saved to the database yet.
   let admin = new User({
     username: "admin",
     password: adminpass,
@@ -22,7 +24,9 @@ const createAdminUser = async () => {
     role: role!._id,
   });
 
+  // Check whether an admin already exists
   let admincount = await User.countDocuments({ username: "admin" });
+
   //In case the admin user already exists, we don't want to create a new one.
   if (!admincount) {
     await admin.save();
@@ -32,6 +36,7 @@ const createAdminUser = async () => {
   }
 };
 
+// Load default orientations (unused feature)
 const createDefaultActivityOrientations = async () => {
   let data = await fs.readFile("data/orientations.json", "utf-8");
   const orientations = JSON.parse(data);
@@ -46,7 +51,9 @@ const createDefaultActivityOrientations = async () => {
   });
 };
 
+// Default roles for database
 const createDefaultRoles = async () => {
+  // Prepare roles array
   let roles = [
     {
       name: "admin",
@@ -63,6 +70,7 @@ const createDefaultRoles = async () => {
       },
     },
   ];
+  // Search by name and update roles found in database. If role does not exist, create one.
   roles.forEach(async (r) => {
     Role.findOneAndUpdate(
       {
@@ -82,6 +90,7 @@ const createDefaultRoles = async () => {
   });
 };
 
+// Load degrees from opintopolku (unused feature)
 const loadDegrees = async () => {
   const dataURL =
     "https://koski.opintopolku.fi/koski/api/koodisto/tutkintonimikkeet/latest";
