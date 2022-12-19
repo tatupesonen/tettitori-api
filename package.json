@@ -13,7 +13,7 @@
   "license": "GNU GPLv3",
   "dependencies": {
     "@sendgrid/mail": "^7.4.2",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
